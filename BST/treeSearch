@@ -1,0 +1,31 @@
+import java.util.*;
+
+public class treeSearch{
+    static class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+
+        TreeNode(int x) {
+            val = x;
+        }
+    }
+
+    private static TreeNode treeSearch(TreeNode root, int k) {
+        if(k == root.val || root == null)
+            return root;
+        if(k < root.val)
+            return treeSearch(root.left, k);
+        else
+            return treeSearch(root.right, k);
+    }
+
+    public static void main(String[] agrs) {
+        TreeNode root = new TreeNode(2);
+        TreeNode left = new TreeNode(1);
+        TreeNode right = new TreeNode(3);
+        root.left = left;
+        root.right = right;
+        System.out.println(treeSearch(root, 3));
+    }
+}

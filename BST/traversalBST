@@ -1,0 +1,56 @@
+import java.util.*;
+
+public class traversalBST{
+    private static List<Integer> res = new ArrayList<>();
+
+    static class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+
+        TreeNode(int x) {
+            val = x;
+        }
+    }
+
+    public static int[] traversal(TreeNode root) {
+        postorder(root);
+        int[] r = new int[res.size()];
+        for (int i = 0; i < r.length; i++) {
+            r[i] = res.get(i);
+        }
+        return r;
+    }
+
+    //inorder traversal
+    public static void inorder(TreeNode root) {
+        if(root == null) return;
+        inorder(root.left);
+        res.add(root.val);
+        inorder(root.right);
+    }
+
+    //preorder traversal
+    public static void preorder(TreeNode root) {
+        if(root == null) return;
+        res.add(root.val);
+        preorder(root.left);
+        preorder(root.right);
+    }
+
+    //postorder traversal
+    public static void postorder(TreeNode root) {
+        if(root == null) return;
+        postorder(root.left);
+        postorder(root.right);
+        res.add(root.val);
+    }
+    public static void main(String[] args) {
+        TreeNode root = new TreeNode(2);
+        TreeNode left = new TreeNode(1);
+        TreeNode right = new TreeNode(3);
+        root.left = left;
+        root.right = right;
+        System.out.println(traversal(root));
+    }
+}

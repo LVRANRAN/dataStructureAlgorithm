@@ -1,0 +1,50 @@
+import java.util.*;
+
+public class DFS{
+    private static List<Integer> res = new ArrayList<>();
+
+    static class Node {
+        int val;
+        List<Node> neighbors;
+        int flag;
+
+        public Node() {
+        };
+
+        public Node(int _val, List<Node> _neighbors, int _flag) {
+            val = _val;
+            neighbors = _neighbors;
+            flag = _flag;
+        }
+    }
+
+    public static List<Integer> dfs(Node root) {
+        res.add(root.val);
+        dfsVisit(root);
+        return res;
+    }
+
+    public static void dfsVisit(Node root) {
+        root.flag = 1;
+        for (Node neighbor : root.neighbors) {
+            if (neighbor.flag == 0) {
+                neighbor.flag = 1;
+                res.add(neighbor.val);
+                dfsVisit(neighbor);
+            }
+        }
+    }
+
+    public static void main(String[] agrs) {
+        List<Node> na = new ArrayList<>();
+        List<Node> nb = new ArrayList<>();
+        List<Node> nc = new ArrayList<>();
+        Node a = new Node(1, na, 0);
+        Node b = new Node(2, nb, 0);
+        Node c = new Node(3, nc, 0);
+        na.add(b);
+        na.add(c);
+        nb.add(c);
+        System.out.println(dfs(a));
+    }
+}

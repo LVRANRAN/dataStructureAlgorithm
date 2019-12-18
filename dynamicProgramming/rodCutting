@@ -1,0 +1,44 @@
+import java.util.*;
+
+public class rodCutting{
+    private static int[] s;
+
+    public static int rodCutting(HashMap<Integer, Integer> map, int n) {
+        s = new int[n + 1];
+        int[] dp = new int[n + 1];
+        dp[0] = 0;
+        for (int i = 1; i < n + 1; i++) {
+            for (int j = 1; j <= i; j++) {
+                if(dp[i] < map.get(j) + dp[i - j]){
+                    dp[i] = map.get(j) + dp[i - j];
+                    if(i == j) s[i] = 0;
+                    else s[i] = j;
+                }
+            }
+        }
+        return dp[n];
+    }
+
+    public static int[] printResult(int n) {
+        List<Integer> res = new ArrayList<>();
+        while (n != 0 && s[n] != 0) {
+            res.add(s[n]);
+            n = n - s[n];
+        }
+        int[] a = new int[res.size()];
+        for (int i = 0; i < res.size(); i++) {
+            a[i] = res.get(i);
+        }
+        return a;
+    }
+
+    public static void main(String[] args) {
+        int n = 2;
+        HashMap<Integer, Integer> map = new HashMap<>();
+        map.put(0, 0);
+        map.put(1, 5);
+        map.put(2, 6);
+        System.out.println(rodCutting(map, n));
+        System.out.println(printResult(n));
+    }
+}

@@ -1,0 +1,51 @@
+import java.util.*;
+
+public class longestCommonSubsequence{
+    private static int[][] res;
+
+    public static int longestCommonSubsequence(char[] a, char[] b) {
+        int lenA = a.length, lenB = b.length;
+        res = new int[lenA + 1][lenB + 1];
+        int[][] dp = new int[lenA + 1][lenB + 1];
+        for (int i = 1; i <= lenA; i++) {
+            for (int j = 1; j <= lenB; j++) {
+                if (a[i - 1] == b[j - 1]) {
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                    res[i][j] = 0;
+                } else if (dp[i - 1][j] > dp[i][j - 1]) {
+                    dp[i][j] = dp[i - 1][j];
+                    res[i][j] = 1;
+                } else {
+                    dp[i][j] = dp[i][j - 1];
+                    res[i][j] = 2;
+                }
+            }
+        }
+        return dp[lenA][lenB];
+    }
+
+    public static String printResult(char[] a, char[] b) {
+        StringBuilder sb = new StringBuilder();
+        int i = a.length, j = b.length;
+        while (i > 0 && j > 0) {
+            if (res[i][j] == 0) {
+                sb.append(a[i - 1]);
+                i--;
+                j--;
+            } else if (res[i][j] == 1) {
+                i--;
+            } else {
+                j--;
+            }
+        }
+        sb.reverse();
+        return sb.toString();
+    }
+
+    public static void main(String[] args) {
+        char[] a = { 'a', 'b', 'c', 'b', 'd', 'a', 'b' };
+        char[] b = { 'b', 'd', 'c', 'a', 'b', 'a' };
+        System.out.println(longestCommonSubsequence(a, b));
+        System.out.println(printResult(a, b));
+    }
+}

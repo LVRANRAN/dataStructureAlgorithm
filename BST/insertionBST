@@ -1,0 +1,40 @@
+import java.util.*;
+
+public class insertionBST{
+    private static class TreeNode{
+        int val;
+        TreeNode left;
+        TreeNode right;
+
+        TreeNode(int x) {
+            val = x;
+        }
+    }
+
+    public static TreeNode insertion(TreeNode root, int key) {
+        TreeNode dummy = root;
+        while (dummy != null && (dummy.left != null || dummy.right != null)) {
+            if (key > dummy.val && dummy.right != null) {
+                dummy = dummy.right;
+            } else if (key < dummy.val && dummy.left != null) {
+                dummy = dummy.left;
+            }
+        }
+        if (key < dummy.val) {
+            dummy.left = new TreeNode(key);
+        } else {
+            dummy.right = new TreeNode(key);
+        }
+        return root;
+    }
+
+    public static void main(String[] args) {
+        TreeNode root = new TreeNode(2);
+        TreeNode left = new TreeNode(1);
+        TreeNode right = new TreeNode(3);
+        root.left = left;
+        root.right = right;
+        int key = 4;
+        System.out.println(insertion(root, key));
+    }
+}

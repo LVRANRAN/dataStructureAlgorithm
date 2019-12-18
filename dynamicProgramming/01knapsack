@@ -1,0 +1,43 @@
+import java.util.*;
+
+public class 01knapsack{
+    private static class Pair {
+        int value;
+        int weight;
+
+        public Pair(int v, int w) {
+            value = v;
+            weight = w;
+        }
+    }
+
+    public static int knapsack(List<Pair> list, int w) {
+        int[][] dp = new int[list.size() + 1][w + 1];
+        for (int i = 1; i <= list.size(); i++) {
+            for (int j = 1; j <= w; j++) {
+                if (list.get(i - 1).weight <= j) {
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i - 1][j - list.get(i - 1).weight] + list.get(i - 1).value);
+                } else {
+                    dp[i][j] = dp[i - 1][j];
+                }
+            }
+        }
+        return dp[list.size()][w];
+    }
+
+    public static void main(String[] args) {
+        int w = 60;
+        Pair a = new Pair(30, 5);
+        Pair b = new Pair(20, 10);
+        Pair c = new Pair(100, 20);
+        Pair d = new Pair(90, 30);
+        Pair e = new Pair(160, 40);
+        List<Pair> list = new LinkedList<>();
+        list.add(a);
+        list.add(b);
+        list.add(c);
+        list.add(d);
+        list.add(e);
+        System.out.println(knapsack(list, w));
+    }
+}

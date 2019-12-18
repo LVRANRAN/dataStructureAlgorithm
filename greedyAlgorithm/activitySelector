@@ -1,0 +1,59 @@
+import java.util.*;
+
+public class activitySelector{
+    private static class Pair {
+        int start;
+        int finish;
+
+        public Pair(int s, int f) {
+            start = s;
+            finish = f;
+        }
+    }
+
+    public static int activitySelector(List<Pair> list) {
+        Collections.sort(list, new Comparator<Pair>() {
+            @Override
+            public int compare(Pair m, Pair n) {
+                return m.finish - n.finish;
+            }
+        });
+        int sum = 1;
+        for (int i = 1; i < list.size(); i++) {
+            if (list.get(i).start >= list.get(i - 1).finish) {
+                sum++;
+            } else {
+                list.remove(list.get(i));
+                i--;
+            }
+        }
+        return sum;
+    }
+
+    public static void main(String[] args) {
+        Pair a = new Pair(1, 4);
+        Pair b = new Pair(3, 5);
+        Pair c = new Pair(0, 6);
+        Pair d = new Pair(5, 7);
+        Pair e = new Pair(3, 8);
+        Pair f = new Pair(5, 9);
+        Pair g = new Pair(6, 10);
+        Pair h = new Pair(8, 11);
+        Pair i = new Pair(8, 12);
+        Pair j = new Pair(2, 13);
+        Pair k = new Pair(12, 14);
+        List<Pair> list = new LinkedList<>();
+        list.add(a);
+        list.add(b);
+        list.add(c);
+        list.add(d);
+        list.add(e);
+        list.add(f);
+        list.add(g);
+        list.add(h);
+        list.add(i);
+        list.add(j);
+        list.add(k);
+        System.out.println(activitySelector(list));
+    }
+}
